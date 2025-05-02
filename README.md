@@ -9,6 +9,68 @@ A comprehensive Delhi transit application that integrates metro information, jou
 - **Step Tracker**: Count your steps and track your movement as you navigate the city using device sensors.
 - **User-Friendly Interface**: Modern UI built with Jetpack Compose for a seamless user experience with bottom navigation.
 
+## Features and Implementation Approaches
+
+### Accessibility Features
+
+- **High Contrast UI**: The app uses Material Design 3 with carefully selected color schemes to ensure good contrast ratios, making content readable for users with visual impairments.
+- **Text Scaling**: All text elements use scalable typography (sp units) that respect user device settings for font size.
+- **Screen Reader Support**: UI components are labeled with content descriptions for TalkBack compatibility.
+- **Keyboard Navigation**: The app supports full keyboard navigation for users who cannot use touch interfaces.
+- **Focus Management**: Implemented proper focus management during station selection and route finding to improve navigation flow.
+
+### Sensing Capabilities
+
+- **Location-Based Services**: Utilizes device GPS to provide nearby station recommendations and real-time location tracking.
+- **Network Connectivity Awareness**: Detects network changes to adjust functionality between online and offline modes.
+- **Device Orientation**: Responsive layout adjusts to different screen orientations and device sizes.
+- **Time Awareness**: Route suggestions consider time of day to account for peak hours and service availability.
+
+### Unique UI Elements
+
+- **Interactive Metro Line Visualization**: Custom implementation of metro lines with proper color coding and interchange indicators that go beyond standard Android UI components.
+- **Station Path Visualization**: Distinctive visual representation of metro routes with:
+
+  - Color-coded line indicators
+  - Interchange highlighting with special icons
+  - Sequential numbering of stations
+  - Visual connectors between stations
+
+- **Dynamic Search Interface**: Custom search implementation with real-time filtering and intuitive selection mechanism for source and destination stations.
+- **Journey Details Card**: Specialized card layout that provides comprehensive route information including:
+  - Total station count
+  - Number of interchanges
+  - Complete station-by-station path with line changes
+
+### Native API Integration
+
+- **Jetpack Compose**: Built entirely with Android's modern declarative UI toolkit for a more maintainable and performant interface.
+- **Hilt Dependency Injection**: Leverages Hilt for dependency management throughout the application.
+- **Kotlin Coroutines and Flow**: Utilizes Kotlin's native concurrency solutions for asynchronous operations and reactive data handling.
+- **ViewModel Architecture**: Implements the MVVM pattern using Android Architecture Components.
+- **Material Design 3**: Adopts the latest Material Design guidelines with dynamic theming capabilities.
+- **StateFlow for UI State Management**: Uses Kotlin's StateFlow for reactive UI updates and state management.
+
+## Implementation Highlights
+
+The app demonstrates advanced implementation techniques particularly in the route display functionality:
+
+- The `RouteDetails` composable in `MetroScreen.kt` provides a comprehensive journey visualization with:
+
+  - Source and destination station details
+  - Summary statistics (total stations and interchanges)
+  - Two different representations of the complete route:
+    1. A simplified list with numbering and interchange indicators
+    2. A detailed view with line colors and comprehensive interchange information
+
+- Each station in the path is displayed with:
+  - Station name
+  - Line information with appropriate color coding
+  - Sequential numbering
+  - Visual indicators for line changes
+
+This implementation provides users with a rich, intuitive understanding of their metro journey beyond what standard components offer.
+
 ## Architecture
 
 The app is built using modern Android development patterns:
