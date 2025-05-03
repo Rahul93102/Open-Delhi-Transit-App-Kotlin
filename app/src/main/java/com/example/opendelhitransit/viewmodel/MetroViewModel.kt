@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.opendelhitransit.data.model.MetroLine
 import com.example.opendelhitransit.data.model.Route
 import com.example.opendelhitransit.data.model.Station
+import com.example.opendelhitransit.data.network.ApiRouteResponse
+import com.example.opendelhitransit.data.network.MetroApiService
 import com.example.opendelhitransit.data.repository.MetroRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +18,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MetroViewModel @Inject constructor(
-    private val repository: MetroRepository
+    private val repository: MetroRepository,
+    private val apiService: MetroApiService
 ) : ViewModel() {
 
     private val TAG = "MetroViewModel"
@@ -64,6 +67,48 @@ class MetroViewModel @Inject constructor(
     fun findRoute(sourceStation: String, destinationStation: String) {
         viewModelScope.launch {
             try {
+                // Try to get route from remote API first
+                try {
+                    Log.i(TAG, "Fetching route from remote API: $sourceStation to $destinationStation")
+                    val response = apiService.getShortestPath(sourceStation, destinationStation)
+                    
+                    if (response.isSuccessful && response.body() != null) {
+                        val apiRouteResponse = response.body()!!
+                        Log.i(TAG, "Remote API successful: ${apiRouteResponse.path.size} stations")
+                        
+                        // Convert API response to our Route model
+                        val pathStations = apiRouteResponse.path.mapIndexed { index, stationName ->
+                            // Create Station objects with appropriate line information
+                            Station(
+                                name = stationName,
+                                line = if (index < apiRouteResponse.lines.size) apiRouteResponse.lines[index] else "Unknown",
+                                index = index
+                            )
+                        }
+                        
+                        if (pathStations.isNotEmpty()) {
+                            val routeResult = Route(
+                                source = pathStations.first(),
+                                destination = pathStations.last(),
+                                path = pathStations,
+                                totalStations = apiRouteResponse.totalStations,
+                                interchangeCount = apiRouteResponse.interchanges
+                            )
+                            
+                            _route.value = routeResult
+                            _error.value = null
+                            return@launch
+                        }
+                    } else {
+                        Log.w(TAG, "Remote API failed: ${response.code()} - ${response.message()}")
+                    }
+                } catch (e: Exception) {
+                    Log.e(TAG, "Error calling remote API", e)
+                    // If remote API fails, fall back to local calculation
+                }
+                
+                // Fall back to local route calculation
+                Log.i(TAG, "Falling back to local route calculation")
                 val routeResult = repository.getRoute(sourceStation, destinationStation)
                 _route.value = routeResult
                 
