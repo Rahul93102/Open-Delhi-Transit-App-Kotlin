@@ -124,7 +124,7 @@ dependencies {
     kapt("com.squareup.moshi:moshi-kotlin-codegen:1.15.0")
     
     // Protobuf for GTFS-realtime
-    implementation("com.google.protobuf:protobuf-javalite:3.21.12")
+    implementation(libs.protobuf.javalite)
     
     // OpenCSV for CSV parsing
     implementation("com.opencsv:opencsv:5.7.1")
