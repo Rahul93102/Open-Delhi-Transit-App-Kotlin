@@ -2,7 +2,6 @@ package com.example.opendelhitransit.di
 
 import android.content.Context
 import com.example.opendelhitransit.data.network.GoMapsFuelStationApiService
-import com.example.opendelhitransit.data.network.MetroApiService
 import com.example.opendelhitransit.data.network.TransitApiService
 import com.example.opendelhitransit.data.repository.GoMapsFuelStationRepository
 import com.example.opendelhitransit.data.repository.MetroRepository
@@ -33,12 +32,6 @@ object AppModule {
     @Singleton
     fun provideTransitApiService(): TransitApiService {
         return TransitApiService.create()
-    }
-    
-    @Provides
-    @Singleton
-    fun provideMetroApiService(): MetroApiService {
-        return MetroApiService.create()
     }
     
     @Provides
