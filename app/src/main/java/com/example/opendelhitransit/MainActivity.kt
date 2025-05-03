@@ -34,9 +34,11 @@ import com.example.opendelhitransit.features.home.HomeScreen
 import com.example.opendelhitransit.features.metro.MetroScreen
 import com.example.opendelhitransit.features.steptracker.StepTrackerScreen
 import com.example.opendelhitransit.features.transit.RealTimeTransitScreen
-import com.example.opendelhitransit.features.transitapp.TransitScreen
+import com.example.opendelhitransit.features.transit.LiveBusMapScreen
 import com.example.opendelhitransit.ui.theme.OpenDelhiTransitTheme
+import com.example.opendelhitransit.viewmodel.TransitViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -60,7 +62,7 @@ class MainActivity : ComponentActivity() {
 fun MainAppContent() {
     val navController = rememberNavController()
     var selectedItemIndex by remember { mutableIntStateOf(0) }
-    
+
     val navigationItems = listOf(
         NavigationItem(
             title = "Home",
@@ -93,7 +95,7 @@ fun MainAppContent() {
             route = "fuel"
         )
     )
-    
+
     Scaffold(
         bottomBar = {
             NavigationBar {
@@ -140,7 +142,14 @@ fun MainAppContent() {
                 MetroScreen()
             }
             composable("real_time_transit") {
-                RealTimeTransitScreen()
+                RealTimeTransitScreen(navController = navController)
+            }
+            composable("live_bus_map") {
+                // Show the map screen and provide the repository via the ViewModel
+                val transitViewModel = hiltViewModel<TransitViewModel>()
+                LiveBusMapScreen(
+                    transitRepository = transitViewModel.repository
+                )
             }
             composable("fuel") {
                 FuelScreen()
