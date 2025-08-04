@@ -1,5 +1,16 @@
 # Open Delhi Transit App
 
+<img width="233" height="541" alt="Screenshot 2025-08-04 at 10 28 30 PM" src="https://github.com/user-attachments/assets/57159751-d26d-4299-bb07-c6f0c9c48b78" />
+
+<img width="254" height="552" alt="Screenshot 2025-08-04 at 10 28 14 PM" src="https://github.com/user-attachments/assets/c0d004a8-590b-4a0e-a404-dbca2109bc67" />
+
+<img width="261" height="544" alt="Screenshot 2025-08-04 at 10 30 12 PM" src="https://github.com/user-attachments/assets/c80fff4b-5d7f-446d-8856-1edbcd1a4fe3" />
+
+<img width="254" height="550" alt="Screenshot 2025-08-04 at 10 30 44 PM" src="https://github.com/user-attachments/assets/cf74beaf-01bb-49eb-87e7-375c8e8c87d9" />
+
+<img width="266" height="579" alt="Screenshot 2025-08-04 at 10 32 09 PM" src="https://github.com/user-attachments/assets/f34b35af-b90d-4a24-8b32-4ddeccb4d4bc" />
+
+
 A comprehensive Delhi transit application that integrates metro information, journey planning, and a step tracker into a single unified experience.
 
 ## Features
